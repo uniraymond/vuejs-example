@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Company</h3>
+    <div id="app">
+        <div id="wrapper">
+            <div id="container">
+                <main-header :company-information="companyInformation"  ></main-header>
+                <company-listings :poodle="companyList"  ></company-listings>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/x-template" id="header-template">
+        <header style="border: 1px solid red;"> 
+            <div>@{ companyInformation.name }</div> 
+            <div>@{ companyInformation.email }</div> 
+        </header> 
+    </script>
+
+    <script type="text/x-template" id="listing-template">
+        @{ hiThere }
+        <table>
+            <tr>
+                <td colspan="2">
+                    <button @click="toggleSorting()">@{ currentLabel }</button>
+                </td>
+            </tr>
+            <tr v-for="item in poodle">
+                <td>@{ item.companyName }</td>
+                <td>@{ item.companyContactEmail }</td>
+            </tr>
+        </table> 
+    </script>
+
+    <script type="text/javascript">
+        Vue.component('main-header', {
+            template: '#header-template',
+            props: {
+                companyInformation: Object
+            },
+            data: function() {
+               return {
+                   companyInformation: this.companyInformation
+               }
+            }
+        });
+        
+        Vue.component('company-listings', {
+            template: '#listing-template',
+            props: {
+                poodle: Array,
+                currentLabel: String,
+                hiThere: String
+            }, data: function() {
+
+                var defaultSortLabel = 'Sort Z-A';
+
+                this.currentLabel = defaultSortLabel;
+                this.hiThere = 'Ray';
+
+                return {
+                    hiThere: this.hiThere,
+                    defaultSortLabel: defaultSortLabel,
+                    currentLabel: this.currentLabel
+                };
+
+            },
+            methods: {
+                toggleSorting: function() {
+                    this.poodle.reverse();
+                    this.changeSortLabel();
+                },
+                changeSortLabel: function() {
+                    this.currentLabel = (this.currentLabel == this.defaultSortLabel) ? 'Sort A-Z' : this.defaultSortLabel;
+                }
+            }
+        });
+
+        var page = new Vue({
+            el: '#app',
+            data: {
+                companyInformation: {
+                    name: "Company Name",
+                    email: "Contact Email"
+                },
+                companyList: [ 
+                    { companyName: "Ray's Electronics",  companyContactEmail: "ray@studionone.com.au" }, 
+                    { companyName: "Studio None",  companyContactEmail: "raymond@studionone.com.au" }, 
+                    { companyName: "Abe Building",  companyContactEmail: "abe@studionone.com.au" }, 
+                    { companyName: "Coolman Resturant",  companyContactEmail: "coolman@studionone.com.au" }, 
+                    { companyName: "Boading Roof",  companyContactEmail: "boading@studionone.com.au" } 
+                ] 
+            }
+        });
+    </script>
+{% endblock %}
+
+

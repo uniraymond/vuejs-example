@@ -1,0 +1,9 @@
+{
+    "project": "vue",
+    "port": "51633:80",
+    "db": {
+        "type": "mysql",
+        "name": "symfony_example",
+        "pass": "security"
+    }
+}

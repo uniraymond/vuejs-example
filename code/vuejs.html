@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+    <script type="text/javascript">
+        Vue.config.delimiters = ['!', '}'];
+    </script>
+</head>
+<body>
+    <div id="welcome">Testing${ message }</div>
+
+    <script type="text/javascript">
+        Vue.config.delimiters = ['${', '}'];
+        new Vue({
+            el: '#welcome',
+            data: {
+                message: "Hello Brisbane, Raymond is here!!! ^@^"
+            }
+        });
+    </script>
+</body>
+</html>
